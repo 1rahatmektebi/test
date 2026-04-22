@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ТЕСТ</title>F
+    <title>ТЕСТ</title>
     <style>
         :root { --p: #2980b9; --s: #27ae60; --d: #e74c3c; --g: #f5f6fa; }
         body { 
@@ -214,7 +214,7 @@
         <option value="Математика">Математика</option>
         <option value="География">География</option>
     </select>
-</div
+    </div>
 
     <div class="input-group" style="display: flex; gap: 10px;">
     <select id="user-grade" style="flex: 1;">
@@ -846,14 +846,13 @@ function finish() {
         lang: (L === 'kz' ? "Қазақша" : "Русский"),
         ln: document.getElementById('ln').value, 
         fn: document.getElementById('fn').value, 
-        subject: subject,  // Пән
-        grade: grade,      // Сынып
-        letter: letter,    // Литер
+        subject: subject, 
+        grade: grade + ' "' + letter + '"', // Мысалы: 8 "A"
         raw: r, 
         viol: viol, 
         pen: p, 
         score: Math.max(0, r - p),
-        L: L 
+        L: L
     };
     
     localStorage.removeItem('quiz_progress');
