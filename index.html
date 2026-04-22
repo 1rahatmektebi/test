@@ -1,1 +1,1003 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ҮЗДІК ИНФОРМАТИКА ПӘНІ МҰҒАЛІМІ - 2026</title>
+    <style>
+        :root { --p: #2980b9; --s: #27ae60; --d: #e74c3c; --g: #f5f6fa; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--g); 
+            display: flex; 
+            flex-direction: column; /* Элементтерді бірінің астына бірін қою */
+            justify-content: center; /* Вертикальды ортаға келтіру */
+            align-items: center;    /* Горизонталды ортаға келтіру */
+            min-height: 100vh;      /* Экранның 100% биіктігін алу */
+            margin: 0; 
+            user-select: none; 
+            padding: 20px; 
+            box-sizing: border-box;
+        }
+        
+        .box { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            width: 100%; 
+            max-width: 800px; 
+            text-align: center; 
+            border-top: 6px solid var(--p); 
+            position: relative;
+            /* margin-bottom: 0; алып тастаңыз, flex өзі реттейді */
+        }
+        
+        .final-footer {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px; /* Тест пен автордың арасы */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .hidden { display: none !important; }
+        input { width: 100%; padding: 14px; margin: 12px 0; border: 2px solid #dfe6e9; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
+        
+        /* Жоғарғы панель стилі */
+        .test-header {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f2f6;
+        }
+        #user-info-display {
+            grid-column: 2;
+            font-weight: 800;
+            color: var(--p);
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+        #timer {
+            grid-column: 3;
+            justify-self: end;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--d);
+            border: 2px solid var(--d);
+            padding: 5px 15px;
+            border-radius: 8px;
+            background: #fff5f5;
+        }
 
+        .opt { display: block; text-align: left; padding: 16px; margin: 12px 0; border: 2px solid #f1f2f6; border-radius: 12px; cursor: pointer; transition: 0.2s; font-size: 17px; }
+        .opt:hover { border-color: var(--p); background: #f0f7ff; }
+        .sel { border-color: var(--p); background: #e1f0ff; font-weight: bold; }
+        .btns { display: flex; justify-content: space-between; gap: 15px; margin-top: 30px; }
+        button { flex: 1; padding: 16px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; font-size: 16px; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .b-next { background: var(--p); } .b-prev { background: #95a5a6; } .b-fin { background: var(--s); }
+        #v-msg { color: var(--d); font-weight: bold; margin-top: 20px; padding: 12px; background: #fff0f0; border-radius: 8px; border: 1px solid #fab1a0; }
+        .res-card { background: #f8f9fa; border-radius: 15px; padding: 25px; margin: 20px 0; border: 1px solid #eee; }
+        #r-score-big { font-size: 110px; font-weight: 900; color: var(--s); margin: 0; line-height: 1; }
+        .res-row { display: flex; justify-content: space-around; margin-top: 25px; border-top: 2px solid #fff; padding-top: 20px; }
+        .res-val { font-size: 32px; font-weight: 800; color: #2d3436; display: block; }
+        .res-txt { font-size: 14px; color: #636e72; font-weight: 600; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-card { background: white; padding: 30px; border-radius: 15px; width: 350px; text-align: center; }
+
+        /* Бұл стиль авторлық блокты экранның астына ортаға жинайды */
+        .author-container {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 15px; /* Блокты тестке тағы жақындату */
+            padding-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .auth-label {
+            font-size: 9px; 
+            color: #a4b0be; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+        }
+        
+        .auth-name {
+            font-size: 11px; 
+            color: #57606f; 
+            font-weight: 600; 
+            margin-bottom: 8px;
+        }
+        
+        .tg-link {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #0088cc;
+            color: white;
+            padding: 4px 12px; 
+            border-radius: 20px;
+            font-size: 9px; 
+            font-weight: 500;
+            transition: 0.3s;
+            box-shadow: 0 2px 8px rgba(0,136,204,0.15);
+        }
+        
+        .tg-link svg {
+            width: 10px; 
+            height: 10px;
+            margin-right: 4px; 
+        }
+
+    .input-group {
+        width: 100%;
+        margin: 0;
+    }
+
+    #school-name {
+        width: 100%;
+        padding: 14px;
+        margin: 12px 0;
+        border: 2px solid #dfe6e9;
+        border-radius: 10px;
+        font-size: 16px;
+        box-sizing: border-box;
+        outline: none;
+        transition: 0.3s;
+    }
+    
+    #school-name:focus {
+        border-color: #2980b9;
+        box-shadow: 0 0 8px rgba(41, 128, 185, 0.2);
+    }
+
+    #r-n {
+        margin-bottom: 20px;
+        line-height: 1.4;
+    }
+
+    /* Қатемен жұмыс батырмасы */
+        .btn-errors {
+            background-color: #e74c3c;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .btn-errors:hover { background-color: #c0392b; }
+        
+        /* Қателер блогы */
+        .error-item {
+            text-align: left;
+            background: #f9f9f9;
+            border-left: 5px solid #e74c3c;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .user-ans { color: #e74c3c; font-weight: bold; } /* Пайдаланушының қате жауабы */
+        .correct-ans { color: #27ae60; font-weight: bold; } /* Дұрыс жауап */
+        .hidden { display: none; }
+        
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+<div class="box">
+    <div id="s-start">
+    <h2 id="t-title">ҮЗДІК ИНФОРМАТИКА ПӘНІ МҰҒАЛІМІ - 2026</h2>
+    <p id="t-desc">Questions: 20 | Time: 30 min</p>
+    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+        <button type="button" onclick="setLanguage('kz')" id="btn-kz" style="background: #2980b9; flex: 1;">Қазақша</button>
+        <button type="button" onclick="setLanguage('ru')" id="btn-ru" style="background: #34495e; flex: 1;">Русский</button>
+    </div>
+    <input type="text" id="ln" placeholder="Тегі / Фамилия">
+    <input type="text" id="fn" placeholder="Аты / Имя">
+
+    <div class="input-group">
+        <input type="text" id="school-name" placeholder="Мектеп атауы / Название школы">
+    </div>
+        
+    <input type="password" id="pass-input" placeholder="Құпиясөз / Пароль" oninput="checkPass()" style="border: 2px solid #f39c12;">
+
+    <button type="button" onclick="openInst()" id="btn-inst-main" style="background: #f39c12; margin-bottom: 10px; width: 100%;">Нұсқаулық / Инструкция</button>
+    
+    <button class="b-next" id="btn-start" onclick="start()" style="display: none; width: 100%;">Тестті бастау</button>
+</div>
+
+    <div id="s-test" class="hidden">
+        <div class="test-header">
+            <div></div>
+            <div id="user-info-display"></div>
+            <div id="timer">30:00</div>
+        </div>
+        <div style="color: #7f8c8d; margin-bottom: 10px;"><span id="q-label">Сұрақ</span>: <span id="q-i">1</span> / 20</div>
+        <h3 id="q-t" style="min-height: 60px;"></h3>
+        <div id="opts"></div>
+        <div class="btns">
+            <button id="p-btn" class="b-prev" onclick="move(-1)">Артқа</button>
+            <button id="n-btn" class="b-next" onclick="move(1)">Келесі</button>
+            <button id="f-btn" class="b-fin hidden" onclick="openModal()">Аяқтау</button>
+        </div>
+        <p id="v-msg">
+            <span id="v-label">Бұзушылықтар</span>: <span id="v-c">0</span> 
+            <span id="pen-info" style="display:none; margin-left:15px; color:#e74c3c; padding: 2px 8px; border-left: 2px solid #ddd;">
+        ⚠️ <span id="pen-txt">Шегерілген балл</span>: <span id="pen-count" style="font-weight:900; font-size:1.2em;">0</span>
+            </span>
+        </p>
+    </div>
+
+    <div id="s-res" class="hidden">
+        <h3 id="r-n"></h3>
+        <div class="res-card">
+            <div id="res-lbl-total" style="font-weight: bold; color: #7f8c8d;">ЖАЛПЫ БАЛЛ</div>
+            <div id="r-score-big">0</div>
+            <div id="r-p" style="font-size: 24px; color: var(--p); font-weight: bold;">0%</div>
+            <div class="res-row">
+                <div class="res-item"><span class="res-val" id="r-raw">0</span><span class="res-txt" id="res-lbl-test">Тест балы</span></div>
+                <div class="res-item" style="color: var(--d);"><span class="res-val" id="r-viol">0</span><span class="res-txt" id="res-lbl-viol">Бұзушылықтар</span></div>
+                <div class="res-item"><span class="res-val" id="r-pen">0</span><span class="res-txt" id="res-lbl-pen">Шегерілді</span></div>
+            </div>
+        </div>
+        <p style="color: #d63031; font-weight: bold; margin-top: 15px;" id="txt-done-msg"></p>
+    </div>
+</div>
+
+<div id="modal" class="modal-overlay hidden" onclick="closeModal()">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <h3 id="m-title">Тестті аяқтауды растайсыз ба?</h3>
+        <button class="b-fin" onclick="finish()" style="width: 100%;" id="m-btn">ИӘ</button>
+    </div>
+</div>
+
+<div id="modal-inst" class="modal-overlay hidden">
+    <div class="modal-card" style="text-align: left; width: 90%; max-width: 450px;">
+        <h3 style="text-align: center;">Нұсқаулық / Инструкция</h3>
+        <div id="inst-body" style="font-size: 15px; line-height: 1.5; margin: 15px 0;"></div>
+        <button class="b-fin" onclick="closeInst()" style="width: 100%;">Түсінікті / Понятно</button>
+    </div>
+</div>
+
+<footer class="final-footer">
+    <div id="t-author" class="auth-label">Авторлық жоба</div>
+    <div class="auth-name">© Izimbetov Nurlan</div>
+    
+    <a href="https://wa.me/77057035668" target="_blank" class="wa-link" style="background-color: transparent; text-decoration: none; display: flex; justify-content: center; margin-top: -2px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0088cc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+            <path d="M22 2L11 13"></path>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+    </a>
+</footer>   
+    
+<script>
+// Сұрақтар базасы (өзгеріссіз қалды)
+const db = {
+    kz: [
+        // Программалау
+{q:"Берілген кодтың нәтижесін анықтаңыз:\nx = 10\ny = 3\nprint(x % y)", a:["1","3","0","3.33"], c:0},
+{q:"Python-да 'if-elif-else' құрылымы не үшін қолданылады?", a:["Цикл құру үшін","Таңдау (тармақталу) үшін","Функцияны шақыру үшін","Мәлімет енгізу үшін"], c:1},
+{q:"Берілген кодтың нәтижесі қандай болады?\na = '2'\nb = '3'\nprint(a + b)", a:["5","23","'5'","Қате"], c:1},
+{q:"Тізімдегі (list) 3-ші элементтің индексі нешеге тең?", a:["3","1","2","4"], c:2},
+{q:"Берілген кодтың нәтижесін табыңыз:\nfor i in range(2):\n    print(i, end=' ')", a:["1 2","0 1","0 1 2","1 1"], c:1},
+{q:"Функциядан мәнді қайтару үшін қай оператор қолданылады?", a:["back","get","return","send"], c:2},
+{q:"Берілген кодтың нәтижесін анықтаңыз:\nitems = ['apple', 'banana']\nitems[0] = 'cherry'\nprint(items)", a:["['apple', 'banana']","['cherry', 'banana']","['apple', 'cherry']","Қате"], c:1},
+
+// Санау жүйелері
+{q:"Сегіздік жүйедегі ең үлкен цифрды көрсетіңіз:", a:["7","8","9","F"], c:0},
+{q:"Екілік жүйедегі 111₂ саны ондық жүйеде нешеге тең?", a:["3","5","7","8"], c:2},
+{q:"16-лық жүйеде 'A' әрпі қандай санды білдіреді?", a:["9","10","11","12"], c:1},
+
+// HTML
+{q:"HTML-де беттің тақырыбын (вкладкадағы атауын) қай тег анықтайды?", a:["<header>","<h1>","<title>","<head>"], c:2},
+{q:"Мәтінді қалың (жирный) етіп көрсету тегі:", a:["<i>","<u>","<b>","<s>"], c:2},
+{q:"HTML құжатының негізгі мазмұны қай тегтің ішінде жазылады?", a:["<head>","<body>","<html>","<main>"], c:1},
+
+// Логика
+{q:"Логикалық 'OR' (НЕМЕСЕ) амалы қай кезде 0 мәнін береді?", a:["Екеуі де 0 болғанда","Екеуі де 1 болғанда","Біреуі 0 болғанда","Біреуі 1 болғанда"], c:0},
+{q:"Өрнектің мәнін табыңыз:\nnot (5 == 5)", a:["True","False","1","0"], c:1},
+{q:"Логикалық көбейту амалы қалай аталады?", a:["Дизъюнкция","Конъюнкция","Инверсия","Импликация"], c:1},
+
+// Желілер
+{q:"Интернетке қосылуға мүмкіндік беретін компания қалай аталады?", a:["Браузер","Провайдер","Сервер","Хост"], c:1},
+{q:"Желідегі деректерді тасымалдау ережелерінің жиынтығы:", a:["Топология","Протокол","Домен","Сайт"], c:1},
+{q:"IP-мекенжайдың дұрыс нұсқасын көрсетіңіз:", a:["192.168.1","256.0.0.1","172.16.254.1","www.google.com"], c:2},
+{q:"Сымсыз дерек тасымалдау технологиясы:", a:["Ethernet","Bluetooth","Fiber-optic","SATA"], c:1},
+        // Программалау
+{q:"Берілген кодтың нәтижесін анықтаңыз:\na = [1, 2, 3]\nb = a\na.append(4)\nprint(b)", a:["[1, 2, 3]","[1, 2, 3, 4]","[4]","Қате"], c:1},
+{q:"Python-да циклді тоқтату (шығу) үшін қай оператор қолданылады?", a:["stop","exit","break","end"], c:2},
+{q:"Кодтың нәтижесі қандай болады?\nx = '10'\nprint(int(x) * 2)", a:["1010","20","'20'","Қате"], c:1},
+{q:"Тізімдегі элементті индексі бойынша өшіру әдісі:", a:["remove()","pop()","delete()","clear()"], c:1},
+{q:"Берілген код неше рет орындалады?\ni = 0\nwhile i < 5:\n    i += 2\n    print(i)", a:["2","3","5","Шексіз"], c:1},
+{q:"Python-да түсініктеме (комментарий) қай таңбадан басталады?", a:["//","/*","#","--"], c:2},
+{q:"Кодтың нәтижесін табыңыз:\nprint('abc'.upper())", a:["abc","Abc","ABC","Қате"], c:2},
+
+// Санау жүйелері
+{q:"Екілік жүйедегі 10101₂ саны ондық жүйеде нешеге тең?", a:["19","21","23","25"], c:1},
+{q:"Ондық жүйедегі 16 саны 16-лық жүйеде қалай жазылады?", a:["F","10","16","A"], c:1},
+{q:"Сегіздік жүйедегі 10₈ саны ондық жүйеде нешеге тең?", a:["8","10","12","16"], c:0},
+
+// HTML
+{q:"HTML-де нөмірленген (1, 2, 3...) тізім жасау тегі:", a:["<ul>","<ol>","<li>","<list>"], c:1},
+{q:"Сыртқы стильдер файлын (CSS) қосу тегі:", a:["<style>","<link>","<script>","<css>"], c:1},
+{q:"HTML-де гиперсілтеме (басқа бетке өту) жасау үшін қай тег қолданылады?", a:["<link>","<a>","<href>","<url>"], c:1},
+{q:"Веб-бетке сурет қою үшін қолданылатын дұрыс тег пен атрибутты көрсетіңіз:", a:["<img href='...'>","<image src='...'>","<img src='...'>","<pic src='...'>"], c:2},
+{q:"HTML-дегі ең үлкен деңгейлі тақырып (заголовок) тегін анықтаңыз:", a:["<h6>","<header>","<h1>","<head>"], c:2},
+{q:"Мәтінді келесі жолға көшіру (перенос строки) үшін қай тег қолданылады?", a:["<lb>","<p>","<break>","<br>"], c:3},
+
+// Логика
+{q:"Логикалық терістеу (инверсия) амалы қайсысы?", a:["AND","OR","NOT","XOR"], c:2},
+{q:"Өрнектің мәнін табыңыз:\n(True or False) and False", a:["True","False","1","None"], c:1},
+{q:"Логикалық қосу амалы қалай аталады?", a:["Конъюнкция","Дизъюнкция","Инверсия","Эквиваленттілік"], c:1},
+
+// Желілер
+{q:"Веб-сайттардың мекенжайын (мысалы, google.com) IP-ге айналдыратын қызмет:", a:["HTTP","FTP","DNS","DHCP"], c:2},
+{q:"Деректерді қауіпсіз (шифрланған) тасымалдау хаттамасы:", a:["HTTP","HTTPS","FTP","SMTP"], c:1},
+{q:"Электрондық поштаны жіберу хаттамасы:", a:["POP3","IMAP","SMTP","HTTP"], c:2},
+{q:"Жергілікті желідегі компьютерлерді біріктіретін құрылғы (Switch) қалай аталады?", a:["Маршрутизатор","Коммутатор","Модем","Концентратор"], c:1},
+        // Программалау
+{q:"Берілген кодтың нәтижесін анықтаңыз:\nprint(3 * '2')", a:["6","222","'32'","Қате"], c:1},
+{q:"Төмендегі кодтың нәтижесі қандай?\nx = [1, 2, 3]\nprint(x.pop(0))", a:["1","2","3","[2, 3]"], c:0},
+{q:"Python-да кездейсоқ сандармен жұмыс істеу модулі:", a:["math","random","time","os"], c:1},
+{q:"Берілген код не шығарады?\nprint(10 > 5 and 3 < 1)", a:["True","False","1","None"], c:1},
+{q:"Тізімді (list) кері ретпен орналастыру әдісі:", a:["sort()","reverse()","clear()","remove()"], c:1},
+{q:"Кодтың нәтижесін табыңыз:\nprint(bool(''))", a:["True","False","0","None"], c:1},
+
+// Санау жүйелері
+{q:"16-лық жүйедегі 'F' цифры ондық жүйеде нешеге тең?", a:["10","14","15","16"], c:2},
+{q:"Екілік жүйедегі 100₂ санын 100₂-ге қосса неше болады (екілік жүйеде)?", a:["200","1000","111","101"], c:1},
+{q:"Сегіздік жүйеде 7-ден кейін келетін сан (санау ретімен):", a:["8","9","10","11"], c:2},
+
+// HTML
+{q:"HTML-де форма құру (пайдаланушы енгізуі үшін) тегі:", a:["<input>","<form>","<select>","<button>"], c:1},
+{q:"Мәтінді курсив етіп көрсету тегі:", a:["<b>","<i>","<u>","<s>"], c:1},
+{q:"Веб-бетке бейне (video) қосу тегі:", a:["<media>","<movie>","<video>","<src>"], c:2},
+
+// Логика
+{q:"Қарсылықты (инверсия) білдіретін логикалық амал:", a:["Және","Немесе","Емес","Теңдік"], c:2},
+{q:"Ақиқат (1) пен Жалған (0) арасындағы 'AND' амалының мәні:", a:["1","0","True","Error"], c:1},
+
+// Желілер
+{q:"Компьютерді зиянды бағдарламалардан қорғайтын бағдарлама:", a:["Браузер","Антивирус","Драйвер","Архиватор"], c:1},
+{q:"Желідегі 'брандмауэр' (firewall) қызметі не?", a:["Интернет жылдамдығын арттыру","Рұқсатсыз кіруден қорғау","Деректерді көшіру","Сайт ашу"], c:1},
+{q:"URL мекенжайының дұрыс құрылымын көрсетіңіз:", a:["http://www.google.com","192.168.0.1","@google_com","google/search"], c:0},
+{q:"Бұлттық технологияларға (cloud storage) мысал:", a:["WinRAR","Google Drive","Photoshop","Excel"], c:1},
+    // Программалау және Алгоритмдер
+{q:"Python-да файлды оқу үшін ашу режимі:", a:["'w'","'a'","'r'","'x'"], c:2},
+{q:"Төмендегі кодтың нәтижесін табыңыз:\nx = [i for i in range(3)]\nprint(x)", a:["[1, 2, 3]","[0, 1, 2]","[0, 1, 2, 3]","[3]"], c:1},
+{q:"Кодтың нәтижесін анықтаңыз:\nprint(type(5.0))", a:["int","float","str","list"], c:1},
+{q:"Тізімдегі элементтерді өсу ретімен сұрыптау әдісі:", a:["reverse()","sort()","sorted()","pop()"], c:1},
+
+// Санау жүйелері
+{q:"Сегіздік жүйедегі 77₈ санынан кейін келетін сан:", a:["78","80","100","111"], c:2},
+{q:"16-лық жүйедегі '10' саны ондық жүйеде нешеге тең?", a:["10","16","32","64"], c:1},
+{q:"Екілік жүйедегі 1000₂ саны ондық жүйеде нешеге тең?", a:["2","4","8","16"], c:2},
+
+// HTML және Web
+{q:"Веб-беттегі мәтіннің түсін өзгертетін CSS қасиеті:", a:["text-color","font-style","color","background"], c:2},
+{q:"HTML-де ашылмалы тізім (dropdown) жасау тегі:", a:["<list>","<select>","<input>","<check>"], c:1},
+
+// Логика
+{q:"Өрнектің мәнін табыңыз:\n(5 > 2) and not (3 == 3)", a:["True","False","1","None"], c:1},
+{q:"Егер А=1, В=0 болса, (A or B) мәні нешеге тең?", a:["0","1","False","Қате"], c:1},
+
+// Желілер мен Қауіпсіздік
+{q:"Компьютерлік желінің ең кіші түрі (жеке құрылғылар үшін):", a:["LAN","WAN","PAN","MAN"], c:2},
+{q:"Браузердегі 'Incognito' режимі не істейді?", a:["IP-ді жасырады","Тарихты (history) сақтамайды","Вирустан қорғайды","Интернетті жылдамдатады"], c:1},
+{q:"Мәліметтерді рұқсатсыз оқудан қорғау үшін шифрлау процесі қалай аталады?", a:["Криптография","Стенография","Архивация","Дефрагментация"], c:0}
+    ],
+    ru: [
+        // Программирование
+{q:"Определите результат данного кода:\nx = 10\ny = 3\nprint(x % y)", a:["1","3","0","3.33"], c:0},
+{q:"Для чего используется структура 'if-elif-else' в Python?", a:["Для создания цикла","Для выбора (ветвления)","Для вызова функции","Для ввода данных"], c:1},
+{q:"Каким будет результат данного кода?\na = '2'\nb = '3'\nprint(a + b)", a:["5","23","'5'","Ошибка"], c:1},
+{q:"Чему равен индекс 3-го элемента в списке (list)?", a:["3","1","2","4"], c:2},
+{q:"Найдите результат данного кода:\nfor i in range(2):\n    print(i, end=' ')", a:["1 2","0 1","0 1 2","1 1"], c:1},
+{q:"Какой оператор используется для возврата значения из функции?", a:["back","get","return","send"], c:2},
+{q:"Определите результат данного кода:\nitems = ['apple', 'banana']\nitems[0] = 'cherry'\nprint(items)", a:["['apple', 'banana']","['cherry', 'banana']","['apple', 'cherry']","Ошибка"], c:1},
+
+// Системы счисления
+{q:"Укажите самую большую цифру в восьмеричной системе:", a:["7","8","9","F"], c:0},
+{q:"Чему равно двоичное число 111₂ в десятичной системе?", a:["3","5","7","8"], c:2},
+{q:"Какое число обозначает буква 'A' в шестнадцатеричной системе?", a:["9","10","11","12"], c:1},
+
+// HTML
+{q:"Какой тег определяет заголовок страницы (название во вкладке) в HTML?", a:["<header>","<h1>","<title>","<head>"], c:2},
+{q:"Тег для отображения текста жирным шрифтом:", a:["<i>","<u>","<b>","<s>"], c:2},
+{q:"Внутри какого тега пишется основное содержимое HTML-документа?", a:["<head>","<body>","<html>","<main>"], c:1},
+
+// Логика
+{q:"Когда логическая операция 'OR' (ИЛИ) дает значение 0?", a:["Когда оба равны 0","Когда оба равны 1","Когда один равен 0","Когда один равен 1"], c:0},
+{q:"Найдите значение выражения:\nnot (5 == 5)", a:["True","False","1","0"], c:1},
+{q:"Как называется логическая операция умножения?", a:["Дизъюнкция","Конъюнкция","Инверсия","Импликация"], c:1},
+
+// Сети
+{q:"Как называется компания, предоставляющая доступ к интернету?", a:["Браузер","Провайдер","Сервер","Хост"], c:1},
+{q:"Набор правил для передачи данных в сети:", a:["Топология","Протокол","Домен","Сайт"], c:1},
+{q:"Укажите правильный вариант IP-адреса:", a:["192.168.1","256.0.0.1","172.16.254.1","www.google.com"], c:2},
+{q:"Технология беспроводной передачи данных:", a:["Ethernet","Bluetooth","Fiber-optic","SATA"], c:1},
+        // Программирование
+{q:"Определите результат данного кода:\na = [1, 2, 3]\nb = a\na.append(4)\nprint(b)", a:["[1, 2, 3]","[1, 2, 3, 4]","[4]","Ошибка"], c:1},
+{q:"Какой оператор используется для прерывания цикла в Python?", a:["stop","exit","break","end"], c:2},
+{q:"Каким будет результат кода?\nx = '10'\nprint(int(x) * 2)", a:["1010","20","'20'","Ошибка"], c:1},
+{q:"Метод удаления элемента из списка по его индексу:", a:["remove()","pop()","delete()","clear()"], c:1},
+{q:"Сколько раз выполнится данный код?\ni = 0\nwhile i < 5:\n    i += 2\n    print(i)", a:["2","3","5","Бесконечно"], c:1},
+{q:"С какого символа начинаются комментарии в Python?", a:["//","/*","#","--"], c:2},
+{q:"Найдите результат кода:\nprint('abc'.upper())", a:["abc","Abc","ABC","Ошибка"], c:2},
+
+// Системы счисления
+{q:"Чему равно двоичное число 10101₂ в десятичной системе?", a:["19","21","23","25"], c:1},
+{q:"Как записывается число 16₁₀ в шестнадцатеричной системе?", a:["F","10","16","A"], c:1},
+{q:"Чему равно восьмеричное число 10₈ в десятичной системе?", a:["8","10","12","16"], c:0},
+
+// HTML
+{q:"Тег для создания нумерованного (1, 2, 3...) списка в HTML:", a:["<ul>","<ol>","<li>","<list>"], c:1},
+{q:"Тег для подключения внешнего файла стилей (CSS):", a:["<style>","<link>","<script>","<css>"], c:1},
+{q:"Какой тег используется в HTML для создания гиперссылки (перехода на другую страницу)?", a:["<link>","<a>","<href>","<url>"], c:1},
+{q:"Укажите правильный тег и атрибут для вставки изображения на веб-страницу:", a:["<img href='...'>","<image src='...'>","<img src='...'>","<pic src='...'>"], c:2},
+{q:"Определите тег заголовка самого высокого (крупного) уровня в HTML:", a:["<h6>","<header>","<h1>","<head>"], c:2},
+{q:"Какой тег используется для переноса текста на новую строку?", a:["<lb>","<p>","<break>","<br>"], c:3},
+
+// Логика
+{q:"Какая операция является логическим отрицанием (инверсией)?", a:["AND","OR","NOT","XOR"], c:2},
+{q:"Найдите значение выражения:\n(True or False) and False", a:["True","False","1","None"], c:1},
+{q:"Как называется операция логического сложения?", a:["Конъюнкция","Дизъюнкция","Инверсия","Эквивалентность"], c:1},
+
+// Сети
+{q:"Служба, преобразующая буквенные адреса (google.com) в IP-адреса:", a:["HTTP","FTP","DNS","DHCP"], c:2},
+{q:"Протокол защищенной (зашифрованной) передачи данных:", a:["HTTP","HTTPS","FTP","SMTP"], c:1},
+{q:"Протокол для отправки электронной почты:", a:["POP3","IMAP","SMTP","HTTP"], c:2},
+{q:"Как называется устройство (Switch) для объединения компьютеров в локальную сеть?", a:["Маршрутизатор","Коммутатор","Модем","Концентратор"], c:1},
+    // Программирование
+{q:"Определите результат данного кода:\nprint(3 * '2')", a:["6","222","'32'","Ошибка"], c:2},
+{q:"Какой результат будет у следующего кода?\nx = [1, 2, 3]\nprint(x.pop(0))", a:["1","2","3","[2, 3]"], c:0},
+{q:"Модуль для работы со случайными числами в Python:", a:["math","random","time","os"], c:1},
+{q:"Что выведет данный код?\nprint(10 > 5 and 3 < 1)", a:["True","False","1","None"], c:1},
+{q:"Метод для расположения списка (list) в обратном порядке:", a:["sort()","reverse()","clear()","remove()"], c:1},
+{q:"Найдите результат кода:\nprint(bool(''))", a:["True","False","0","None"], c:1},
+
+// Системы счисления
+{q:"Чему равна цифра 'F' шестнадцатеричной системы в десятичной?", a:["10","14","15","16"], c:2},
+{q:"Чему равна сумма 100₂ + 100₂ в двоичной системе?", a:["200","1000","111","101"], c:1},
+{q:"Какое число следует за 7 в восьмеричной системе (при счете)?", a:["8","9","10","11"], c:2},
+
+// HTML
+{q:"Тег для создания формы (для ввода пользователя) в HTML:", a:["<input>","<form>","<select>","<button>"], c:1},
+{q:"Тег для отображения текста курсивом:", a:["<b>","<i>","<u>","<s>"], c:1},
+{q:"Тег для добавления видео на веб-страницу:", a:["<media>","<movie>","<video>","<src>"], c:2},
+
+// Логика
+{q:"Логическая операция, означающая отрицание (инверсию):", a:["И","ИЛИ","НЕ","Равенство"], c:2},
+{q:"Значение операции 'AND' между Истиной (1) и Ложью (0):", a:["1","0","True","Error"], c:1},
+
+// Сети
+{q:"Программа, защищающая компьютер от вредоносного ПО:", a:["Браузер","Антивирус","Драйвер","Архиватор"], c:1},
+{q:"Какова функция брандмауэра (firewall) в сети?", a:["Увеличение скорости интернета","Защита от несанкционированного доступа","Копирование данных","Открытие сайтов"], c:1},
+{q:"Укажите правильную структуру URL-адреса:", a:["http://www.google.com","192.168.0.1","@google_com","google/search"], c:0},
+{q:"Пример облачных технологий (облачное хранилище):", a:["WinRAR","Google Drive","Photoshop","Excel"], c:1},
+    // Программирование и Алгоритмы
+{q:"Режим открытия файла для чтения в Python:", a:["'w'","'a'","'r'","'x'"], c:2},
+{q:"Найдите результат следующего кода:\nx = [i for i in range(3)]\nprint(x)", a:["[1, 2, 3]","[0, 1, 2]","[0, 1, 2, 3]","[3]"], c:1},
+{q:"Определите результат кода:\nprint(type(5.0))", a:["int","float","str","list"], c:1},
+{q:"Метод для сортировки элементов списка по возрастанию:", a:["reverse()","sort()","sorted()","pop()"], c:1},
+
+// Системы счисления
+{q:"Число, следующее за 77₈ в восьмеричной системе:", a:["78","80","100","111"], c:2},
+{q:"Чему равно число '10' из шестнадцатеричной системы в десятичной?", a:["10","16","32","64"], c:1},
+{q:"Чему равно двоичное число 1000₂ в десятичной системе?", a:["2","4","8","16"], c:2},
+
+// HTML и Web
+{q:"Свойство CSS для изменения цвета текста на веб-странице:", a:["text-color","font-style","color","background"], c:2},
+{q:"Тег для создания выпадающего списка (dropdown) в HTML:", a:["<list>","<select>","<input>","<check>"], c:1},
+
+// Логика
+{q:"Найдите значение выражения:\n(5 > 2) and not (3 == 3)", a:["True","False","1","None"], c:1},
+{q:"Если А=1, В=0, чему равно значение (A or B)?", a:["0","1","False","Ошибка"], c:1},
+
+// Сети и Безопасность
+{q:"Самый маленький тип компьютерной сети (для личных устройств):", a:["LAN","WAN","PAN","MAN"], c:2},
+{q:"Что делает режим 'Инкогнито' в браузере?", a:["Скрывает IP","Не сохраняет историю (history)","Защищает от вирусов","Ускоряет интернет"], c:1},
+{q:"Как называется процесс шифрования данных для защиты от несанкционированного чтения?", a:["Криптография","Стенография","Архивация","Дефрагментация"], c:0}
+    ]
+};
+
+const ui = {
+    kz: { 
+        title: "ҮЗДІК ИНФОРМАТИКА ПӘНІ МҰҒАЛІМІ - 2026 <br> Еңбекшіқазақ ауданы", 
+        authorText: "Авторлық жоба", // Қазақша мәтін
+        desc: "Сұрақ: 20 | Уақыт: 30 минут", 
+        start: "Тестті бастау", 
+        prev: "Артқа", 
+        next: "Келесі", 
+        fin: "Аяқтау", 
+        fin_done: "АЯҚТАЛДЫ",
+        viol: "Ереже бұзушылықтар", 
+        q_lbl: "Сұрақ", 
+        m_title: "Тестті аяқтауды растайсыз ба?", 
+        m_btn: "ИӘ", 
+        total: "ЖАЛПЫ БАЛЛ", 
+        t_score: "Тест баллы", 
+        pen: "Балл алынды", 
+        pen_label: "Балл алынды", // Қосылды
+        done: "ТЕСТ АЯҚТАЛДЫ!", 
+        inst_text: "<b>Тест ережелері:</b><br>• Сұрақ саны: 20<br>• Уақыт: 30 минут<br>• <b>МАҢЫЗДЫ:</b> Басқа терезеге ауыспаңыз!<br>• 3-ші реттен бастап әр ауысу үшін 1 балл алынып тасталады." 
+    },
+    ru: { 
+        title: "ЛУЧШИЙ УЧИТЕЛЬ ИНФОРМАТИКИ - 2026 <br> Енбекшиказахский район", 
+        authorText: "Авторский проект", // Орысша мәтін
+        desc: "Вопросов: 20 | Время: 30 минут", 
+        start: "Начать тест", 
+        prev: "Назад", 
+        next: "Далее", 
+        fin: "Завершить", 
+        fin_done: "ЗАВЕРШЕНО",
+        viol: "Нарушения правил", 
+        q_lbl: "Вопрос", 
+        m_title: "Подтверждаете завершение?", 
+        m_btn: "ДА", 
+        total: "ИТОГОВЫЙ БАЛЛ", 
+        t_score: "Балл теста", 
+        pen: "Снято баллов", 
+        pen_label: "Снято баллов", // Қосылды
+        done: "ТЕСТ ЗАВЕРШЕН!", 
+        inst_text: "<b>Правила теста:</b><br>• Количество вопросов: 20<br>• Время: 30 минут<br>• <b>ВАЖНО:</b> Не выходите из окна браузера!<br>• Начиная с 3-го нарушения, за каждый выход снимается 1 балл." 
+    }
+};
+
+let qs=[], cur=0, ans=[], timer, time=1800, viol=0, L='kz', isStarted=false, isFinished=false;
+let isPaused = false;
+
+const escapeHTML = (str) => {
+    if (!str) return "---";
+    return str.replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#039;");
+};
+
+function updateUI() {
+    const t = ui[L];
+    document.getElementById('t-title').innerHTML = t.title;
+    document.getElementById('t-author').innerText = t.authorText;
+    document.getElementById('t-desc').innerText = t.desc;
+    document.getElementById('btn-start').innerText = t.start;
+    document.getElementById('p-btn').innerText = t.prev;
+    document.getElementById('n-btn').innerText = t.next;
+    document.getElementById('f-btn').innerText = t.fin;
+    document.getElementById('v-label').innerText = t.viol;
+    document.getElementById('q-label').innerText = t.q_lbl;
+    document.getElementById('m-title').innerText = t.m_title;
+    document.getElementById('m-btn').innerText = t.m_btn;
+    document.getElementById('res-lbl-total').innerText = t.total;
+    document.getElementById('res-lbl-test').innerText = t.t_score;
+    document.getElementById('res-lbl-viol').innerText = t.viol;
+    document.getElementById('res-lbl-pen').innerText = t.pen;
+    document.getElementById('txt-done-msg').innerText = t.done;
+    document.getElementById('pen-txt').innerText = t.pen_label;
+}
+
+// Толық экранды қосу
+function enterFull() {
+    let elem = document.documentElement;
+    if (elem.requestFullscreen) elem.requestFullscreen();
+    else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+    else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+}
+
+// Толық экраннан шығу
+function exitFull() {
+    if (document.fullscreenElement) {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        else if (document.msExitFullscreen) document.msExitFullscreen();
+    }
+}
+    
+function setLanguage(lang) {
+    L = lang; updateUI();
+    document.getElementById('btn-kz').style.background = (lang === 'kz') ? '#2980b9' : '#34495e';
+    document.getElementById('btn-ru').style.background = (lang === 'ru') ? '#2980b9' : '#34495e';
+}
+
+function openInst() {
+    document.getElementById('inst-body').innerHTML = ui[L].inst_text;
+    document.getElementById('modal-inst').classList.remove('hidden');
+}
+
+function closeInst() {
+    document.getElementById('modal-inst').classList.add('hidden');
+    // Бұл жерден батырманы көрсетуді алып тастадық, 
+    // себебі оны тек checkPass() көрсетуі тиіс.
+    checkPass(); 
+}
+
+// ПАРАҚШАНЫ ЖАҢАРТҚАНДА ДЕРЕКТЕРДІ САҚТАУ
+function saveProgress() {
+    if (isStarted && !isFinished) {
+        const data = {
+            qs, cur, ans, time, viol, L,
+            fn: document.getElementById('fn').value,
+            ln: document.getElementById('ln').value
+        };
+        localStorage.setItem('quiz_progress', JSON.stringify(data));
+    }
+}
+
+function loadProgress() {
+    const result = localStorage.getItem('quiz_result');
+    if (result) {
+        showResult(JSON.parse(result));
+        return;
+    }
+
+    const saved = localStorage.getItem('quiz_progress');
+    if (saved) {
+        const d = JSON.parse(saved);
+        // Сақталған деректерді айнымалыларға жүктеу
+        qs = d.qs; cur = d.cur; ans = d.ans; time = d.time; viol = d.viol; L = d.L;
+        
+        document.getElementById('fn').value = d.fn || "";
+        document.getElementById('ln').value = d.ln || "";
+        setLanguage(L);
+        
+        isStarted = true;
+        document.getElementById('s-start').classList.add('hidden');
+        document.getElementById('s-test').classList.remove('hidden');
+        document.getElementById('user-info-display').innerText = (d.ln || "") + " " + (d.fn || "");
+        
+        // --- МАҢЫЗДЫ: Шегерілген баллдарды қайта қалпына келтіру ---
+        document.getElementById('v-c').innerText = viol;
+        const penalty = (viol >= 3) ? (viol - 2) : 0;
+        if (penalty > 0) {
+            document.getElementById('pen-info').style.display = "inline";
+            document.getElementById('pen-count').innerText = penalty;
+        }
+        // -------------------------------------------------------
+
+        if(timer) clearInterval(timer);
+        timer = setInterval(() => { 
+            if(!isFinished) { 
+                time--; updateT(); 
+                if(time<=0) finish(); 
+                saveProgress(); 
+            } 
+        }, 1000);
+        
+        render();
+    } else {
+        updateUI();
+    }
+}
+
+function checkPass() {
+    const correctPass = "010404"; 
+    const inputPass = document.getElementById('pass-input').value.trim();
+    const btnStart = document.getElementById('btn-start');
+
+    // Тек 2026 жазылса ғана батырма пайда болады
+    if (inputPass === correctPass) {
+        btnStart.style.display = "block";
+    } else {
+        btnStart.style.display = "none";
+    }
+}
+    
+function start(resume = false) {
+    let f = document.getElementById('fn').value.trim();
+    let l = document.getElementById('ln').value.trim();
+    let s = document.getElementById('school-name').value.trim(); // Мектепті алу
+
+    if(!f || !l || !s) return alert(L==='kz'?"Барлық өрісті толтырыңыз!":"Заполните все поля!");
+
+    enterFull();
+    // Аты-жөнін және астына мектепті шығару (br арқылы)
+    document.getElementById('user-info-display').innerHTML = `${l} ${f}<br><span style="font-size: 12px; color: #7f8c8d; text-transform: none;">${s}</span>`;
+    
+    if(!resume) {
+        qs = [...db[L]].sort(()=>0.5-Math.random()).slice(0, 20);
+        ans = new Array(20).fill(null);
+        viol = 0; // Жаңа тест басталғанда нөлге қою
+    }
+    
+    isStarted = true; // Бұл өте маңызды!
+    isFinished = false;
+    document.getElementById('s-start').classList.add('hidden');
+    document.getElementById('s-test').classList.remove('hidden');
+    
+    if(timer) clearInterval(timer);
+    timer = setInterval(() => { 
+        if(!isFinished) { 
+            time--; updateT(); 
+            if(time<=0) finish(); 
+        } 
+    }, 1000);
+    render();
+}
+
+function updateT() {
+    let m=Math.floor(time/60), s=time%60;
+    document.getElementById('timer').innerText = `${m}:${s<10?'0':''}${s}`;
+}
+
+function render() {
+    document.getElementById('q-i').innerText = cur+1;
+    document.getElementById('q-t').innerText = qs[cur].q;
+    let b = document.getElementById('opts'); b.innerHTML='';
+    qs[cur].a.forEach((o,i)=>{
+        let d=document.createElement('div'); d.className='opt'+(ans[cur]===i?' sel':'');
+        d.innerText=o; 
+        d.onclick=()=>{
+            if(!isFinished){
+                ans[cur]=i; 
+                saveProgress(); // Жауап таңдалғанда сақтаймыз
+                render();
+            }
+        }; 
+        b.appendChild(d);
+    });
+    document.getElementById('p-btn').disabled = (cur===0);
+    document.getElementById('n-btn').classList.toggle('hidden', cur===19);
+    document.getElementById('f-btn').classList.toggle('hidden', cur<19);
+    document.getElementById('v-c').innerText = viol;
+    
+    saveProgress(); // Сұрақ ауысқан сайын сақтаймыз
+}
+
+function move(n) { 
+    if(!isFinished) { 
+        // Егер оқушы экраннан шығып кетсе, "Келесі/Артқа" басқанда қайта кіргізу
+        if (!document.fullscreenElement) {
+            enterFull();
+        }
+        cur+=n; 
+        render(); 
+    } 
+}
+function openModal() { document.getElementById('modal').classList.remove('hidden'); }
+function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+function finish() {
+    const answeredCount = ans.filter(a => a !== null).length;
+    if (answeredCount < 20) {
+        const msg = (L === 'kz') 
+            ? `Барлық сұраққа жауап беріңіз! (Орындалғаны: ${answeredCount}/20)` 
+            : `Ответьте на все вопросы! (Выполнено: ${answeredCount}/20)`;
+        
+        isPaused = true; 
+        alert(msg);
+        closeModal();
+        setTimeout(() => { isPaused = false; }, 800);
+        return;
+    }
+
+    const modalBtn = document.getElementById('m-btn');
+    const finishBtn = document.getElementById('f-btn');
+    if (modalBtn.disabled) return;
+    
+    modalBtn.disabled = true;
+    modalBtn.innerText = ui[L].fin_done || "АЯҚТАЛДЫ";
+    if(finishBtn) {
+        finishBtn.disabled = true;
+        finishBtn.innerText = ui[L].fin_done || "АЯҚТАЛДЫ";
+    }
+
+    isFinished = true; 
+    isStarted = false; 
+    clearInterval(timer); 
+
+    // Нәтижені есептеу
+    let r = 0; ans.forEach((a, i) => { if (qs[i] && a === qs[i].c) r++; }); 
+    let p = (viol >= 3) ? (viol - 2) : 0;
+    
+    // Мектеп атауын алу
+    const schoolInput = document.getElementById('school-name');
+    let s = schoolInput ? schoolInput.value : "Көрсетілмеген";
+
+    const res = { 
+        lang: (L === 'kz' ? "Қазақша" : "Русский"), // Google кесте үшін
+        ln: document.getElementById('ln').value, 
+        fn: document.getElementById('fn').value, 
+        school: s,
+        raw: r, 
+        viol: viol, 
+        pen: p, 
+        score: Math.max(0, r-p),
+        L: L // showResult функциясы тілді тануы үшін керек
+    };
+    
+    localStorage.removeItem('quiz_progress');
+    localStorage.setItem('quiz_result', JSON.stringify(res));
+
+    exitFull(); 
+    closeModal();
+    showResult(res); // Экранға нәтижені шығару
+
+    // Google Sheets-ке жіберу
+    fetch('https://script.google.com/macros/s/AKfycbwrsUEsPsuN7rZcVYnFLpcRoi03WGpNvIH1cS3QR-ayDouSpzA5VUsOvv1GT8HAq9oY/exec', {
+        method: 'POST', 
+        mode: 'no-cors', 
+        body: JSON.stringify(res)
+    }).catch(err => console.log("Дерек жіберу қатесі:", err));
+}
+
+// 1. Нәтиже көрсету функциясы (Жаңартылған)
+function showResult(d) {
+    if (d.L) L = d.L;
+    updateUI();
+    
+    // Блоктарды ауыстыру
+    document.getElementById('s-start').classList.add('hidden');
+    document.getElementById('s-test').classList.add('hidden');
+    const resSec = document.getElementById('s-res');
+    resSec.classList.remove('hidden');
+
+    // Экранның ең жоғарғы жағына Аты-жөні мен Мектепті шығару
+    document.getElementById('r-n').innerHTML = `
+        <div style="font-size: 26px; color: #2d3436; margin-bottom: 5px; font-weight: 800;">
+            ${d.ln} ${d.fn}
+        </div>
+        <div style="font-size: 18px; color: #636e72; font-weight: 400; margin-bottom: 20px;">
+            ${d.school || ""}
+        </div>
+    `;
+
+    // Негізгі сандарды толтыру
+    document.getElementById('r-score-big').innerText = d.score;
+    document.getElementById('r-p').innerText = Math.round((d.score / 20) * 100) + "%";
+    document.getElementById('r-raw').innerText = d.raw;
+    document.getElementById('r-viol').innerText = d.viol;
+    document.getElementById('r-pen').innerText = d.pen;
+
+    // Қателерді есептеу және тізімін жасау
+    let errorHtml = `<div id="error-review" class="hidden" style="margin-top:25px; border-top:2px dashed #ccc; padding-top:20px;">`;
+    let hasErrors = false;
+
+    // ans - бұл пайдаланушы таңдаған индекстер массиві
+    // qs - бұл тест сұрақтарының массиві
+    // showResult функциясының ішінде:
+ans.forEach((userAnswerIndex, i) => {
+    if (qs[i] && userAnswerIndex !== qs[i].c) {
+        hasErrors = true;
+        
+        // МІНЕ ОСЫ ЖЕРДЕ escapeHTML ҚОЛДАНЫЛАДЫ:
+        const userAnsSafe = escapeHTML(qs[i].a[userAnswerIndex]); 
+        const correctAnsSafe = escapeHTML(qs[i].a[qs[i].c]);
+
+        errorHtml += `
+            <div class="error-item">
+                <div style="margin-bottom: 5px; font-weight: bold;">${i + 1}. ${qs[i].q}</div>
+                <div class="user-ans">${L === 'kz' ? 'Сіздің жауабыңыз' : 'Ваш ответ'}: ${userAnsSafe}</div>
+                <div class="correct-ans">${L === 'kz' ? 'Дұрыс жауап' : 'Правильный ответ'}: ${correctAnsSafe}</div>
+            </div>`;
+    }
+});
+    errorHtml += `</div>`;
+
+    // Егер қате болса, батырманы қосамыз
+    if (hasErrors) {
+        const btnText = L === 'kz' ? 'Қатемен жұмыс' : 'Работа с ошибками';
+        const reviewBtnHtml = `
+            <div style="text-align:center; margin: 15px 0;">
+                <button id="show-errors-btn" class="btn-errors" onclick="toggleErrors()">
+                    ${btnText}
+                </button>
+            </div>`;
+        
+        // Батырманы нәтиже картасынан кейін қосамыз
+        const resCard = resSec.querySelector('.res-card');
+        
+        // Ескі батырма болса өшіріп, жаңасын қосамыз (қайталанбауы үшін)
+        const oldBtn = document.getElementById('show-errors-btn');
+        if (oldBtn) oldBtn.remove();
+        const oldReview = document.getElementById('error-review');
+        if (oldReview) oldReview.remove();
+
+        resCard.insertAdjacentHTML('afterend', reviewBtnHtml);
+        resSec.insertAdjacentHTML('beforeend', errorHtml);
+    }
+}
+
+// 2. Қателерді көрсету/жасыру ауыстырғышы
+function toggleErrors() {
+    const reviewDiv = document.getElementById('error-review');
+    const btn = document.getElementById('show-errors-btn');
+    
+    if (reviewDiv.classList.contains('hidden')) {
+        reviewDiv.classList.remove('hidden');
+        btn.innerText = L === 'kz' ? 'Жасыру' : 'Скрыть';
+        // Тізімге автоматты түрде жылжу
+        reviewDiv.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        reviewDiv.classList.add('hidden');
+        btn.innerText = L === 'kz' ? 'Қатемен жұмыс' : 'Работа с ошибками';
+    }
+}
+
+window.onblur = function() {
+    // Тексеріс: Тест басталған болуы керек және аяқталмауы керек
+    if(!isStarted || isFinished || isPaused) return;
+    
+    // Егер "Аяқтау" модаль терезесі ашық болса, есептемеу
+    if(!document.getElementById('modal').classList.contains('hidden')) return;
+
+    viol++; 
+    document.getElementById('v-c').innerText = viol;
+    
+    let msg = "";
+    // Айыппұл: 3-ші рет шыққанда 1 балл, 4-шіде 2 балл және т.б.
+    const penalty = (viol >= 3) ? (viol - 2) : 0;
+
+    if (L === 'kz') {
+        if (viol === 1) msg = "⚠️ ЕСКЕРТУ (1/2): Басқа терезеге ауыспаңыз!";
+        else if (viol === 2) msg = "🚫 ҚАТАҢ ЕСКЕРТУ (2/2): Келесі жолы балл алынады!";
+        else msg = `❌ ЕРЕЖЕ БҰЗЫЛДЫ! ${penalty} балл алынып тасталды!`;
+    } else {
+        if (viol === 1) msg = "⚠️ ПРЕДУПРЕЖДЕНИЕ (1/2): Не выходите из окна!";
+        else if (viol === 2) msg = "🚫 ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ (2/2): В следующий раз будет снят балл!";
+        else msg = `❌ НАРУШЕНИЕ! Снято баллов: ${penalty}`;
+    }
+
+    if (penalty > 0) {
+        document.getElementById('pen-info').style.display = "inline";
+        document.getElementById('pen-count').innerText = penalty;
+    }
+
+    isPaused = true; 
+    alert(msg);
+    // Паузаны сәл кешіктіріп ашамыз, браузер "фокусты" қайта алғанша
+    setTimeout(() => { isPaused = false; }, 800);
+};
+window.onload = () => { 
+    setLanguage(L); // 1. Тілді және интерфейсті баптайды
+    loadProgress(); // 2. Сақталған прогресті тексереді
+};
+
+// БАРЛЫҚ ТЕХНИКАЛЫҚ КОМАНДАЛАРДЫ БЛОКТАУ
+document.onkeydown = function(e) {
+    // F12 (123)
+    if (e.keyCode === 123) {
+        return false;
+    }
+    // Ctrl+Shift+I (73), Ctrl+Shift+J (74), Ctrl+Shift+C (67)
+    if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+        return false;
+    }
+    // Ctrl+U (85) - Кодты қарау, Ctrl+S (83) - Сақтау
+    if (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83)) {
+        return false;
+    }
+    // Ctrl+C (67), Ctrl+V (86), Ctrl+X (88) - Көшіру/Қою
+    if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 88)) {
+        return false;
+    }
+};    
+
+document.addEventListener('fullscreenchange', () => {
+    // Егер тест басталса, бірақ әлі аяқталмаса ЖӘНЕ экран кішірейсе
+    if (!document.fullscreenElement && isStarted && !isFinished) {
+        let msg = L === 'kz' 
+            ? "⚠️ НАЗАР АУДАРЫҢЫЗ: Тест толық экран режимінде өтуі тиіс.\nЖалғастыру үшін 'Келесі' немесе 'Артқа' батырмасын басыңыз." 
+            : "⚠️ ВНИМАНИЕ: Тест должен проходить в полноэкранном режиме.\nНажмите 'Далее' или 'Назад', чтобы вернуть полный экран.";
+        
+        alert(msg);
+        // Бұл жерде viol++ жоқ, сондықтан балл шегерілмейді
+    }
+});
+
+    
+</script>
+</body>
+</html>
