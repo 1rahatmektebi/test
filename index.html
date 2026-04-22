@@ -833,29 +833,27 @@ function finish() {
     clearInterval(timer); 
 
     // Нәтижені есептеу
-    let r = 0; ans.forEach((a, i) => { if (qs[i] && a === qs[i].c) r++; }); 
+    let r = 0; 
+    ans.forEach((a, i) => { if (qs[i] && a === qs[i].c) r++; }); 
     let p = (viol >= 3) ? (viol - 2) : 0;
     
-    // Мектеп атауын алу
+    // Жаңа деректерді алу (Пән, Сынып, Литер)
     const grade = document.getElementById('user-grade').value;
-const letter = document.getElementById('user-letter').value;
-const subject = document.getElementById('school-name').value; // если вы оставили это для предмета
-
-if (!name || !grade || !letter || !subject) {
-    alert(L === 'kz' ? 'Барлық өрістерді толтырыңыз!' : 'Заполните все поля!');
-    return;
-}
+    const letter = document.getElementById('user-letter').value;
+    const subject = document.getElementById('school-name').value;
 
     const res = { 
-        lang: (L === 'kz' ? "Қазақша" : "Русский"), // Google кесте үшін
+        lang: (L === 'kz' ? "Қазақша" : "Русский"),
         ln: document.getElementById('ln').value, 
         fn: document.getElementById('fn').value, 
-        school: s,
+        subject: subject,  // Пән
+        grade: grade,      // Сынып
+        letter: letter,    // Литер
         raw: r, 
         viol: viol, 
         pen: p, 
-        score: Math.max(0, r-p),
-        L: L // showResult функциясы тілді тануы үшін керек
+        score: Math.max(0, r - p),
+        L: L 
     };
     
     localStorage.removeItem('quiz_progress');
@@ -863,7 +861,7 @@ if (!name || !grade || !letter || !subject) {
 
     exitFull(); 
     closeModal();
-    showResult(res); // Экранға нәтижені шығару
+    showResult(res); // Нәтижені экранға шығару
 
     // Google Sheets-ке жіберу
     fetch('https://script.google.com/macros/s/AKfycbwrsUEsPsuN7rZcVYnFLpcRoi03WGpNvIH1cS3QR-ayDouSpzA5VUsOvv1GT8HAq9oY/exec', {
@@ -872,8 +870,6 @@ if (!name || !grade || !letter || !subject) {
         body: JSON.stringify(res)
     }).catch(err => console.log("Дерек жіберу қатесі:", err));
 }
-
-// 1. Нәтиже көрсету функциясы (Жаңартылған)
 function showResult(d) {
     if (d.L) L = d.L;
     updateUI();
@@ -884,13 +880,13 @@ function showResult(d) {
     const resSec = document.getElementById('s-res');
     resSec.classList.remove('hidden');
 
-    // Экранның ең жоғарғы жағына Аты-жөні мен Мектепті шығару
+    // Экранның ең жоғарғы жағына Аты-жөнін, Пәнді және Сыныпты шығару
     document.getElementById('r-n').innerHTML = `
         <div style="font-size: 26px; color: #2d3436; margin-bottom: 5px; font-weight: 800;">
             ${d.ln} ${d.fn}
         </div>
         <div style="font-size: 18px; color: #636e72; font-weight: 400; margin-bottom: 20px;">
-            ${d.school || ""}
+            ${d.subject} | ${d.grade} "${d.letter}" ${L === 'kz' ? 'сынып' : 'класс'}
         </div>
     `;
 
