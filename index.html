@@ -207,8 +207,14 @@
     <input type="text" id="fn" placeholder="Аты / Имя">
 
     <div class="input-group">
-        <input type="text" id="school-name" placeholder="Мектеп атауы / Название школы">
-    </div>
+    <select id="school-name">
+        <option value="" disabled selected>Пәнді таңдаңыз / Выберите предмет</option>
+        <option value="Информатика">Информатика</option>
+        <option value="Физика">Физика</option>
+        <option value="Математика">Математика</option>
+        <option value="География">География</option>
+    </select>
+</div>
         
     <input type="password" id="pass-input" placeholder="Құпиясөз / Пароль" oninput="checkPass()" style="border: 2px solid #f39c12;">
 
